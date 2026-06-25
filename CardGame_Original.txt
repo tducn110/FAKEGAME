@@ -1,0 +1,66 @@
+Created At: 2026-06-24T10:12:27Z
+Completed At: 2026-06-24T10:12:28Z
+
+				The command completed successfully.
+				Output:
+				import { useEffect, useRef } from 'react';
+import type { Card, Particle, DamageNumber, CardGameProps } from '../../game/types';
+import { useGameState } from '../../hooks/useGameState';
+import { PlayerHUD } from './PlayerHUD';
+import { EnemyHUD } from './EnemyHUD';
+import { PlayingCard } from './PlayingCard';
+import characterSprite from 'figma:asset/749653866c572d97f2ced236dc2068e4a0696656.png';
+import enemySprite from 'figma:asset/0aeea4921f1215c52fce980d72dfd5ac956ab8c8.png';
+import backgroundImage from 'figma:asset/4b5983da361572a80e256fa23d1a36a1d6870d88.png';
+import defendCardImage from 'figma:asset/efe58cfeddc4e2caa464968a47ef82ccb7cdfc9d.png';
+import darkBibleCardImage from 'figma:asset/81e9727b251609f04cc14e76990205ea284f33a5.png';
+import tropicalFruitCardImage from 'figma:asset/92304158a2f6897f7235abf61a458ec1760fcccd.png';
+import shootCardImage from 'figma:asset/ee45a398de21ea3fe00cc1ebdace203bac2577a4.png';
+import imgScrollOuter from "figma:asset/6fb0d23ec1ac4791fe50e9d82f4025181e14cf42.png";
+import imgScrollInner from "figma:asset/0bd2914d7eb4b34ea587e81e81e324f6fb73d43f.png";
+import imgHealthIcon from "figma:asset/4f13b5b961df123ad8b98b2056cebdd3a29cda5c.png";
+import imgManaIcon from "figma:asset/99de9a5f07d5bd023847249ac048447372bf5fd3.png";
+import { PixiCanvas } from "./PixiCanvas";
+import svgPaths from "../../imports/svg-06zh3695vz";
+import PileButton from './PileButton';
+import EndTurnButton from './EndTurnButton';
+import GameMessageBox from './GameMessageBox';
+import GameOverPopup from './GameOverPopup';
+import TutorialHint from './TutorialHint';
+import { announceReady, announceFight } from './announcer';
+import {
+  CARD_DECK, DESIGN_W, DESIGN_H,
+  INITIAL_PLAYER_HEALTH, INITIAL_ENEMY_HEALTH,
+  INITIAL_PLAYER_MANA, INITIAL_ENEMY_MANA, MAX_MANA, MANA_GROWTH_INTERVAL,
+  INITIAL_DECK_BUILD, INITIAL_ENEMY_DECK_BUILD,
+  RESET_DECK_BUILD, RESET_ENEMY_DECK_BUILD,
+  CARD_TYPE_MAP, shuffleArray, buildDeck,
+} from '../../game/config';
+import {
+  playWerewolfClawSound,
+  playDarkBibleSound,
+  playDefendSound,
+  playTropicalFruitSound,
+  playDefeatSound,
+} from '../../audio/sounds';
+import { startBackgroundMusic, stopBackgroundMusic } from '../../audio/bgm';
+import { greedyEnemyAI, ENEMY_TIMING } from '../../game/enemyAI';
+import ClawVFX from '../../components/vfx/ClawVFX';
+import DarkBibleVFX from '../../components/vfx/DarkBibleVFX';
+import TropicalFruitVFX from '../../components/vfx/TropicalFruitVFX';
+import ShieldVFX from '../../components/vfx/ShieldVFX';
+import DamageNumbers from '../../components/vfx/DamageNumbers';
+
+export function CardGame({ started = false, isMobile = false }: CardGameProps) {
+  // ── Mobile: 20 % smaller characters + cards ──────────────────────────────
+  const charW       = isMobile ? 288 : 360;   // player sprite  (360 × 0.8)
+  const charH       = isMobile ? 288 : 360;
+  const enemW       = isMobile ? 240 : 300;   // enemy  sprite  (300 × 0.8)
+  const enemH       = isMobile ? 240 : 300;
+  const cardW       = isMobile ? 162 : 202;   // card face      (202 × 0.8)
+  const cardH       = isMobile ? 226 : 282;   // card face      (282 × 0.8)
+  const handSpacing    = isMobile ? 128 : 160;   // fan x-gap      (160 × 0.8)
+  const handHeight     = isMobile ? 272 : 340;   // hand container (340 × 0.8)
+  const pShieldSize    = isMobile ? 166 : 208;   // player shield VFX size
+  const eShieldSize    = isMobile ? 147 : 184;   // enemy  shield VFX size
+

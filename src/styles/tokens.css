@@ -1,0 +1,109 @@
+/* ═══════════════════════════════════════════════════════════════════════════
+   Genshin TCG Design Tokens
+   All colors, sizes, fonts, shadows used across the game.
+   Components MUST reference these variables, never hardcode values.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ── Typography ──────────────────────────────────────────────────────── */
+  --font-game: 'Averia Serif Libre', serif;
+
+  /* ── Game Colors ─────────────────────────────────────────────────────── */
+  --color-bg-dark: #0a0a18;
+  --color-bg-game: #0a0a18;
+
+  /* Text */
+  --color-text-primary: #44331a;
+  --color-text-secondary: #6d542f;
+  --color-text-light: #fffcf3;
+  --color-text-cream: #fffbf3;
+
+  /* Health */
+  --color-health-bar: #bd6468;
+  --color-health-bg: #ffffff;
+  --color-health-border: #ffffff;
+
+  /* Mana */
+  --color-mana-bar: #8cd0fb;
+  --color-mana-bg: #ffffff;
+  --color-mana-border: #ffffff;
+
+  /* Damage/Heal */
+  --color-damage: #BB1F68;
+  --color-damage-glow: rgba(187, 31, 104, 0.65);
+  --color-heal: #3ecf5e;
+  --color-heal-glow: rgba(62, 207, 94, 0.65);
+  --color-heal-light: #90f0a8;
+
+  /* VFX */
+  --color-claw-player: rgba(255, 0, 0, 0.9);
+  --color-claw-enemy: rgba(255, 80, 0, 0.9);
+  --color-dark-bible: rgba(155, 92, 189, 0.9);
+  --color-fruit-glow: rgba(160, 230, 60, 0.95);
+  --color-shield-player: rgba(255, 215, 100, 0.85);
+  --color-shield-enemy: rgba(255, 180, 60, 0.85);
+  --color-shield-glow: rgba(255, 255, 200, 0.7);
+  --color-shield-text-glow: #c8a020;
+
+  /* UI */
+  --color-btn-glow: rgba(147, 112, 219, 0.4);
+  --color-btn-glow-active: rgba(147, 112, 219, 0.8);
+  --color-btn-glow-gold: rgba(255, 215, 0, 0.5);
+  --color-enemy-card-tint: rgba(160, 20, 20, 0.28);
+  --color-enemy-badge-bg: rgba(140, 10, 10, 0.82);
+  --color-enemy-badge-border: rgba(255, 100, 100, 0.55);
+  --color-enemy-badge-text: #ffcccc;
+  --color-golden-glow: rgba(255, 210, 50, 0.18);
+  --color-golden-glow-inner: rgba(255, 210, 50, 0.5);
+  --color-black-overlay: rgba(0, 0, 0, 0.60);
+  --color-mobile-badge-bg: rgba(0, 0, 0, 0.45);
+  --color-mobile-badge-border: rgba(255, 255, 255, 0.15);
+  --color-mobile-badge-text: rgba(255, 255, 255, 0.55);
+
+  /* PreScreen */
+  --color-parchment-title: #3B2206;
+  --color-parchment-subtitle: #7A5120;
+
+  /* ── Sizes ───────────────────────────────────────────────────────────── */
+  --size-vfx-offset: 380px;
+  --size-fruit-offset: 396px;
+  --size-dmg-offset-enemy-right: 546px;
+  --size-dmg-offset-player-left: 576px;
+  --size-claw: 200px;
+  --size-dark-bible: 400px;
+  --size-fruit-small: 56px;
+  --size-fruit-large: 70px;
+  --size-damage-number: 88px;
+  --size-bar-height: 17.235px;
+  --size-bar-width: 175.696px;
+  --size-bar-radius: 590.761px;
+  --size-bar-border: 0.957px;
+
+  /* ── Z-index layers ──────────────────────────────────────────────────── */
+  --z-canvas: 0;
+  --z-vfx: 20;
+  --z-characters: 55;
+  --z-black-overlay: 50;
+  --z-damage: 60;
+  --z-game-message: 62;
+  --z-hud: 9999;
+  --z-cards: 999;
+  --z-intro-text: 500;
+  --z-prescreen: 9999;
+  --z-gameover: 9999;
+
+  /* ── Shadows ─────────────────────────────────────────────────────────── */
+  --shadow-damage-text: 0 0 24px var(--color-damage-glow), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-heal-text: 0 0 24px var(--color-heal-glow), 0 4px 16px rgba(0, 0, 0, 0.55);
+  --shadow-shield-number: 0 0 12px var(--color-shield-text-glow), 0 2px 6px rgba(0, 0, 0, 0.9), 0 0 3px #000;
+
+  /* ── Font sizes ──────────────────────────────────────────────────────── */
+  --fs-hud-label: 17.24px;
+  --fs-hud-name: 32px;
+  --fs-status-label: 11.78px;
+  --fs-shield-number-player: 38px;
+  --fs-shield-number-enemy: 34px;
+  --fs-damage: 88px;
+  --fs-pile-label: 16.318px;
+  --fs-game-message: 22px;
+}

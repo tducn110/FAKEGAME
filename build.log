@@ -1,0 +1,39 @@
+
+> @figma/my-make-file@0.0.1 build
+> vite build
+
+vite v6.3.5 building for production...
+transforming...
+✓ 797 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                                        0.73 kB │ gzip:   0.41 kB
+dist/assets/27ac8d110de23706e36cd3626314ac81d83e55da-CmA1NX40.png      6.21 kB
+dist/assets/5fbc0f11aa5c01e6fdfb69d1d54a67b3c77f685b-C1tWLnvX.png     54.59 kB
+dist/assets/16ae7de0ac39276127ed83f0300bf4c696c12d39-CAF8Nqpf.png     71.46 kB
+dist/assets/4f13b5b961df123ad8b98b2056cebdd3a29cda5c-DDw09_u0.png    133.09 kB
+dist/assets/fc32814c502d8b4264f72d196818696a277c38d8-CgMYxrTb.png    160.76 kB
+dist/assets/0aeea4921f1215c52fce980d72dfd5ac956ab8c8-BQN5vzLh.png    179.02 kB
+dist/assets/55ad35d9e26679621ee5b8e521ad0e6e7e8fa519-BLRoxuxC.png    207.45 kB
+dist/assets/99de9a5f07d5bd023847249ac048447372bf5fd3-BrtUSK7n.png    210.70 kB
+dist/assets/749653866c572d97f2ced236dc2068e4a0696656-B4nlpcDc.png    231.17 kB
+dist/assets/0bd2914d7eb4b34ea587e81e81e324f6fb73d43f-CXKti3se.png    269.20 kB
+dist/assets/6fb0d23ec1ac4791fe50e9d82f4025181e14cf42-CVhw9Zky.png    485.73 kB
+dist/assets/ee45a398de21ea3fe00cc1ebdace203bac2577a4-DADcmL0E.png  1,329.95 kB
+dist/assets/efe58cfeddc4e2caa464968a47ef82ccb7cdfc9d-2oAEvqHT.png  1,340.51 kB
+dist/assets/92304158a2f6897f7235abf61a458ec1760fcccd-rOmTU0J4.png  1,344.29 kB
+dist/assets/81e9727b251609f04cc14e76990205ea284f33a5-oASsd_Xd.png  1,350.11 kB
+dist/assets/1585093dc9956998910d206579a047fd9d61bc13-Dss4Mcnh.png  2,374.48 kB
+dist/assets/59a11dc60eec257b7096f1a596799764c77372a9-BOMDiF6f.png  3,050.83 kB
+dist/assets/4b5983da361572a80e256fa23d1a36a1d6870d88-BqWi7vlL.png  3,732.94 kB
+dist/assets/8492b939d4f74a004d8640bdd5c338e0e6a52376-CpBYiQ2z.png  4,396.16 kB
+dist/assets/index-BGJHnz32.css                                        40.18 kB │ gzip:   8.88 kB
+dist/assets/webworkerAll-tq8xBNW5.js                                   0.08 kB │ gzip:   0.09 kB
+dist/assets/browserAll-CRzD7MKO.js                                     0.17 kB │ gzip:   0.15 kB
+dist/assets/index-CWPhIe4I.js                                      1,225.95 kB │ gzip: 364.76 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 3.23s

@@ -1,0 +1,18 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
+
+@theme inline {
+  --font-game: 'Averia Serif Libre', serif;
+  --color-game-bg: #0a0a18;
+  --color-game-text: #44331a;
+  --color-game-text-secondary: #6d542f;
+  --color-game-health: #bd6468;
+  --color-game-mana: #8cd0fb;
+  --color-game-damage: #BB1F68;
+  --color-game-heal: #3ecf5e;
+  --color-game-shield-text: #c8a020;
+  --color-game-gold: #FFE566;
+  --color-game-pink: #FF99F5;
+}

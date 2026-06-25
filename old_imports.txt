@@ -1,0 +1,18 @@
+Created At: 2026-06-24T09:56:25Z
+Completed At: 2026-06-24T09:56:33Z
+The following changes were made by the replace_file_content tool to: /home/pro/Downloads/Genshin Impact TCG (Community)/src/app/components/CardGame.tsx. If relevant, proactively run terminal commands to execute this code for the USER. Don't ask for permission.
+[diff_block_start]
+@@ -1,6 +1,8 @@
+ import { useEffect, useRef } from 'react';
+ import type { Card, Particle, DamageNumber, CardGameProps } from '../../game/types';
+ import { useGameState } from '../../hooks/useGameState';
++import { PixiGameView } from './PixiGameView';
++import { PlayerHUD } from './PlayerHUD';
+ import characterSprite from 'figma:asset/749653866c572d97f2ced236dc2068e4a0696656.png';
+ import enemySprite from 'figma:asset/0aeea4921f1215c52fce980d72dfd5ac956ab8c8.png';
+ import backgroundImage from 'figma:asset/4b5983da361572a80e256fa23d1a36a1d6870d88.png';
+[diff_block_end]
+
+Please note that the above snippet only shows the MODIFIED lines from the last change. It shows up to 3 lines of unchanged lines before and after the modified lines. The actual file contents may have many more lines not shown.
+
+We did our best to apply changes despite some inaccuracies. Double check if the edit applied is what you intended.

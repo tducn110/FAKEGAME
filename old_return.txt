@@ -1,0 +1,339 @@
+  return (
+    <div
+      className="w-full h-full p-0 overflow-hidden relative"
+      style={{
+        transform: screenShake > 0
+          ? `translate(${(Math.random() - 0.5) * screenShake}px, ${(Math.random() - 0.5) * screenShake}px)`
+          : 'none',
+      }}
+    >
+      {/* ── PixiJS & GSAP Rendering Layer ── */}
+      <PixiCanvas
+        backgroundImage={backgroundImage}
+        characterSprite={characterSprite}
+        enemySprite={enemySprite}
+        introStarted={introStarted}
+        introCharPhase={introCharPhase as any}
+        playerHit={playerHit}
+        enemyHit={enemyHit}
+        playerJumping={playerJumping}
+        enemyJumping={enemyJumping}
+        laserBeamRef={laserBeamRef}
+        particlesRef={particlesRef}
+        charW={charW}
+        charH={charH}
+        enemW={enemW}
+        enemH={enemH}
+        screenShake={screenShake}
+      />
+
+      {/* Top Section - Health Bars (Cyan boxes) */}
+      <div className="absolute top-16 left-0 right-0 flex justify-between px-8 z-10 pointer-events-none">
+        {/* ── Player HUD slide-in wrapper ── */}
+        <PlayerHUD
+          introStarted={introStarted}
+          playerHealth={playerHealth}
+          playerMana={playerMana}
+          maxMana={maxMana}
+          playerShield={playerShield}
+          imgScrollOuter={imgScrollOuter}
+          imgScrollInner={imgScrollInner}
+          imgHealthIcon={imgHealthIcon}
+          imgManaIcon={imgManaIcon}
+        />
+
+        {/* ── Enemy HUD slide-in wrapper ── */}
+        <EnemyHUD
+          introStarted={introStarted}
+          enemyHealth={enemyHealth}
+          enemyMana={enemyMana}
+          enemyMaxMana={enemyMaxMana}
+          enemyShield={enemyShield}
+          imgScrollOuter={imgScrollOuter}
+          imgScrollInner={imgScrollInner}
+          imgHealthIcon={imgHealthIcon}
+          imgManaIcon={imgManaIcon}
+        />
+      </div>
+
+      {/* Middle Section - Characters (Yellow boxes) */}
+      <div className="absolute top-1/2 left-0 right-0 transform -translate-y-1/2 flex justify-between px-8 z-[55]">
+        {/* Player Character - Left Side */}
+        <div 
+          className="absolute top-1/2"
+          style={{
+            left: 'clamp(calc(50% - 730px), 25%, calc(50% - 430px))',
+            ...(introCharPhase === 'entering'
+              ? {
+                  animation: 'char-slide-in-left 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s both',
+                  transition: 'none',
+                  willChange: 'transform',
+                }
+              : {
+                  transform: playerJumping
+                    ? 'translate(400px, calc(-50% - 100px))'
+                    : 'translate(0, calc(-50% - 100px))',
+                  transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  willChange: 'transform',
+                }),
+          }}
+        >
+          {/* Hit reaction wrapper */}
+          <div
+            style={{
+              animation: playerHit ? 'hit-react-player 0.7s ease-out forwards' : 'none',
+              transformOrigin: 'center bottom',
+            }}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              {/* Player Image removed, rendered in PixiCanvas */}
+              <div style={{ width: `${charW}px`, height: `${charH}px` }} />
+            </div>
+          </div>
+
+          {/* ── Player Shield VFX — anchored to sprite, moves with character ── */}
+          <ShieldVFX side="player" shield={playerShield} showAnim={showPlayerShieldAnim} size={pShieldSize} fontSize={pShieldFont} />
+        </div>
+
+        {/* Canvas - invisible overlay for effects */}
+        <div className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+          <canvas
+            ref={canvasRef}
+            width={800}
+            height={400}
+            style={{ imageRendering: 'pixelated' }}
+          />
+        </div>
+
+        {/* Enemy Character - Right */}
+        <div
+          className="absolute top-1/2"
+          style={{
+            right: 'clamp(calc(50% - 730px), 25%, calc(50% - 430px))',
+            ...(introCharPhase === 'entering'
+              ? {
+                  animation: 'char-slide-in-right 0.9s cubic-bezier(0.22,1,0.36,1) 0.15s both',
+                  transition: 'none',
+                  willChange: 'transform',
+                }
+              : {
+                  transform: enemyJumping
+                    ? 'translate(-320px, -50%)'
+                    : 'translate(0, -50%)',
+                  transition: 'all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1)',
+                  willChange: 'transform',
+                }),
+          }}
+        >
+          {/* Hit reaction wrapper */}
+          <div
+            style={{
+              animation: enemyHit ? 'hit-react-enemy 0.7s ease-out forwards' : 'none',
+              transformOrigin: 'center bottom',
+            }}
+          >
+            <div className="w-full h-full flex items-center justify-center">
+              {/* Enemy Image removed, rendered in PixiCanvas */}
+              <div style={{ width: `${enemW}px`, height: `${enemH}px` }} />
+            </div>
+          </div>
+
+          {/* ── Enemy Shield VFX — anchored to sprite, moves with character ── */}
+          <ShieldVFX side="enemy" shield={enemyShield} showAnim={showEnemyShieldAnim} size={eShieldSize} fontSize={eShieldFont} />
+        </div>
+        
+        {/* Player VFX */}
+        <ClawVFX side="player" visible={showClaw} />
+        <DarkBibleVFX side="player" visible={showDarkBibleVFX} />
+        <TropicalFruitVFX side="player" visible={showTropicalFruitVFX} />
+
+        {/* Enemy VFX */}
+        <ClawVFX side="enemy" visible={showEnemyClaw} />
+        <DarkBibleVFX side="enemy" visible={showEnemyDarkBibleVFX} />
+        <TropicalFruitVFX side="enemy" visible={showEnemyTropicalFruitVFX} />
+
+      </div>
+
+      {/* Damage Numbers */}
+      <DamageNumbers numbers={damageNumbers} />
+
+      {/* Dark Bible — Full-screen dark overlay (covers background, HUD, cards; characters section sits above at z-[55]) */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundColor: '#000000',
+          opacity: blackScreenOpacity,
+          zIndex: 50,
+          transition: 'opacity 0.1s ease-in, opacity 0.2s ease-out',
+        }}
+      />
+
+      {/* Game Message Overlay — parchment scroll banner */}
+      {gameMessage && (
+        <div className="absolute top-4 left-1/2 -translate-x-1/2 z-[62] pointer-events-none">
+          <GameMessageBox text={gameMessage} />
+        </div>
+      )}
+
+      {/* Game Over Popup */}
+      {gameOver && (
+        <GameOverPopup
+          isVictory={enemyHealth <= 0}
+          onPlayAgain={resetGame}
+        />
+      )}
+
+      {/* Tutorial Hint - Bottom Left Corner */}
+      <div className="absolute bottom-11 left-14 z-[9999] pointer-events-none">
+        <TutorialHint visible={!hasPlayedCard && isPlayerTurn && !gameOver} />
+      </div>
+
+      {/* End Turn Button - Bottom Right Corner */}
+      <div className="absolute bottom-8 right-32 z-[9999] pointer-events-auto">
+        <EndTurnButton
+          onClick={endTurn}
+          disabled={!isPlayerTurn || gameOver}
+        />
+      </div>
+
+      {/* Bottom Section - Hand Cards (Red box) */}
+      <div className="absolute bottom-0 left-0 right-0 px-8 pb-4 z-[999] pointer-events-none" style={{ transform: 'translateY(80px)' }}>
+        <div className="mx-auto" style={{ maxWidth: '1200px' }}>
+          {/* Action Buttons */}
+          <div className="flex gap-3 justify-center items-center mb-3">
+            <div style={{ width: '162px', height: '56px' }} className="pointer-events-auto">
+              <PileButton label="Deck" count={deck.length} />
+            </div>
+            
+            <div style={{ width: '162px', height: '56px' }} className="pointer-events-auto">
+              <PileButton label="Discard" count={discardPile.length} />
+            </div>
+
+
+          </div>
+
+          {/* Hand Cards */}
+          <div className="flex justify-center items-end relative" style={{ minHeight: `${handHeight}px` }}>
+            {hand.length === 0 && enemyHand.length === 0 ? (
+              <div className="text-white text-sm py-8 bg-black/50 px-4 rounded">
+                {isPlayerTurn && !gameOver ? "No cards. End turn to draw." : "Waiting..."}
+              </div>
+            ) : (
+              <div className="relative flex justify-center items-end" style={{ width: '100%', height: `${handHeight}px` }}>
+
+                {/* ── Enemy Hand Cards ──────────────────────────────────────── */}
+                {enemyHand.map((card, index) => (
+                  <PlayingCard
+                    key={`enemy-${enemyDrawAnimKey}-${card.id}`}
+                    card={card}
+                    index={index}
+                    totalCards={enemyHand.length}
+                    side="enemy"
+                    handSpacing={handSpacing}
+                    cardW={cardW}
+                    cardH={cardH}
+                    isMobile={isMobile}
+                    isPlaying={enemyPlayingCardId === card.id}
+                    drawAnimKey={enemyDrawAnimKey}
+                    isDiscarding={isEnemyDiscarding}
+                    cardImages={{
+                      'Dark Bible': darkBibleCardImage,
+                      'Tropical Fruit': tropicalFruitCardImage,
+                      'Shoot': shootCardImage,
+                      'Defend': defendCardImage,
+                    }}
+                  />
+                ))}
+
+                {/* ── Player Hand Cards ─────────────────────────────────────── */}
+                {hand.map((card, index) => (
+                  <PlayingCard
+                    key={`${drawAnimKey}-${card.id}`}
+                    card={card}
+                    index={index}
+                    totalCards={hand.length}
+                    side="player"
+                    handSpacing={handSpacing}
+                    cardW={cardW}
+                    cardH={cardH}
+                    isMobile={isMobile}
+                    drawAnimKey={drawAnimKey}
+                    isDiscarding={isDiscarding}
+                    cardsLocked={cardsLocked}
+                    gameOver={gameOver}
+                    isPlayerTurn={isPlayerTurn}
+                    playerMana={playerMana}
+                    cardImages={{
+                      'Dark Bible': darkBibleCardImage,
+                      'Tropical Fruit': tropicalFruitCardImage,
+                      'Shoot': shootCardImage,
+                      'Defend': defendCardImage,
+                    }}
+                    onClick={() => {
+                      if (!gameOver && isPlayerTurn && !isDiscarding && !cardsLocked && playerMana >= card.cost) {
+                        playCard(card);
+                      }
+                    }}
+                  />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
+      {/* ── "Ready!" intro text ── */}
+      {showReadyText && (
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ zIndex: 500 }}
+        >
+          <div style={{ animation: 'ready-slam-in 0.55s cubic-bezier(0.34,1.56,0.64,1) forwards' }}>
+            <p
+              style={{
+                fontFamily: "'Averia Serif Libre', serif",
+                fontSize: 'clamp(72px, 11vw, 130px)',
+                fontWeight: 'bold',
+                color: '#FFE566',
+                WebkitTextStroke: '4px rgba(160,90,0,0.85)',
+                textShadow:
+                  '0 0 80px rgba(255,220,0,0.95), 0 0 30px rgba(255,160,0,0.8), 0 8px 24px rgba(0,0,0,0.9)',
+                letterSpacing: '-3px',
+                userSelect: 'none',
+                lineHeight: 1,
+              }}
+            >
+              Ready...
+            </p>
+          </div>
+        </div>
+      )}
+
+      {/* ── "FIGHT!" intro text ── */}
+      {showFightText && (
+        <div
+          className="absolute inset-0 flex items-center justify-center pointer-events-none"
+          style={{ zIndex: 500 }}
+        >
+          <div style={{ animation: 'fight-slam-in 0.45s cubic-bezier(0.34,1.56,0.64,1) forwards' }}>
+            <p
+              style={{
+                fontFamily: "'Averia Serif Libre', serif",
+                fontSize: 'clamp(90px, 15vw, 170px)',
+                fontWeight: 'bold',
+                color: '#FF99F5',
+                WebkitTextStroke: '5px rgba(160,20,140,0.9)',
+                textShadow: '0 0 30px rgba(255,150,245,0.8), 0 10px 30px rgba(0,0,0,0.95)',
+                letterSpacing: '-5px',
+                userSelect: 'none',
+                lineHeight: 1,
+              }}
+            >
+              FIGHT!
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
